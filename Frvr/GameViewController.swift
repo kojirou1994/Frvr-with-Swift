@@ -9,25 +9,61 @@
 import UIKit
 import SpriteKit
 
+enum ShapeUnitDirector: Int {
+    case SUDNone = -1
+    case SUDTopLeft = 0
+    case SUDTopRight
+    case SUDRight
+    case SUDBottomRight
+    case SUDBottomLeft
+    case SUDLeft
+}
+enum ShapeType: Int {
+    case STypeSingle = 0
+    case STypeLine
+    case STypeLeftSlashLine
+    case STypeRightSlashLine
+    case STypeLeftSquare
+    case STypeRightSquare
+    case STypeSquare
+    case STypeLLTCompositeOne
+    case STypeLRTCompositeOne
+    case STypeLLBCompositeOne
+    case STypeLRBCompositeOne
+    case STypeRLTCompositeOne
+    case STypeRRTCompositeOne
+    case STypeRLBCompositeOne
+    case STypeRRBCompositeOne
+    case STypeTopLeftCompositeTwo
+    case STypeBottomLeftCompositeTwo
+    case STypeTopRightCompositeTwo
+    case STypeBottomRightCompositeTwo
+    case STypeZeroCompositeThree
+    case STypeOneCompositeThree
+    case STypeTwoCompositeThree
+    case STypeThreeCompositeThree
+    case STypeFourCompositeThree
+    case STypeFiveCompositeThree
+}
+
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let scene = GameScene(fileNamed:"GameScene") {
-            // Configure the view.
-            let skView = self.view as! SKView
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            skView.ignoresSiblingOrder = true
-            
-            /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
-            
-            skView.presentScene(scene)
-        }
+        let scene = GameScene(size: self.view.bounds.size)
+        // Configure the view.
+        let skView = self.view as! SKView
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        
+        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        skView.ignoresSiblingOrder = true
+        
+        /* Set the scale mode to scale to fit the window */
+        scene.scaleMode = .AspectFill
+        
+        skView.presentScene(scene)
     }
 
     override func shouldAutorotate() -> Bool {
