@@ -25,10 +25,10 @@ class GameScene: SKScene {
     var unitWidth: CGFloat!
     var unitHeight: CGFloat!
     var score: Int = 0
+    var bestScore: Int = 0
     var gameOverStatu: Bool = false
     
     func startNewGame(){
-//        self.paused = false
         gameOverStatu = false
         self.refreshPlayground()
         self.shapeFill()
@@ -36,9 +36,9 @@ class GameScene: SKScene {
     
     func gameOver(){
         gameOverStatu = true
-        
         NSNotificationCenter.defaultCenter().postNotificationName("GameOver", object: score)
-//        self.paused = true
+        let bestScoreLabel = self.childNodeWithName("bestScoreLabel") as! SKLabelNode
+        bestScoreLabel.text = "最高纪录:\(bestScore)"
         
     }
     
@@ -57,11 +57,18 @@ class GameScene: SKScene {
         myLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetHeight(self.frame)-40)
         self.addChild(myLabel)
         
-        let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        let scoreLabel = SKLabelNode(fontNamed: "Heiti SC")
         scoreLabel.text = "当前分数 : "
         scoreLabel.fontSize = 26
         scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame)-120, CGRectGetHeight(self.frame)-90)
         self.addChild(scoreLabel)
+        
+        let bestScoreLabel = SKLabelNode(fontNamed: "Heiti SC")
+        bestScoreLabel.name = "bestScoreNumberLabel"
+        bestScoreLabel.text = "最高纪录:\(bestScore)"
+        bestScoreLabel.fontSize = 13
+        bestScoreLabel.position = CGPointMake(CGRectGetMaxX(self.frame)-60, CGRectGetHeight(self.frame)-90)
+        self.addChild(bestScoreLabel)
         
         let scoreNumberLabel = SKLabelNode(fontNamed: "Heiti SC")
         scoreNumberLabel.name = "scoreNumberLabel"
@@ -119,14 +126,14 @@ class GameScene: SKScene {
                     }
                 }
             }
-            score = gameOverStatu ? score + ocuppiedCount * 10 : score
-            self.changeScore()
             if index == ocuppiedCount{
                 for unitNode in tempArray{
                     (unitNode as! SKSpriteNode).texture = texture
                     let unitInfo = (unitNode as! SKSpriteNode).userData?.objectForKey("unitInfo") as! ShapeUnitInfo
                     unitInfo.occupy = true
                 }
+                score = !gameOverStatu ? score + ocuppiedCount * 10 : score
+                self.changeScore()
                 shapeArray.removeObject(handleNode)
                 handleNode.removeFromParent()
                 self.shapeFill()
@@ -391,12 +398,15 @@ class GameScene: SKScene {
     }
     
     func changeScore(){
-        let label = self.childNodeWithName("scoreNumberLabel") as! SKLabelNode
-        label.text = "\(score)"
+        let scoreLabel = self.childNodeWithName("scoreNumberLabel") as! SKLabelNode
+        scoreLabel.text = "\(score)"
     }
     
     func dataInit(){
         score = 0
+        if let _ = NSUserDefaults.standardUserDefaults().valueForKey("bestScore"){
+            bestScore = NSUserDefaults.standardUserDefaults().valueForKey("bestScore")!.integerValue
+        }
         self.unitInfoInit()
     }
     

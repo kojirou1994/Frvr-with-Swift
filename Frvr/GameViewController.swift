@@ -80,7 +80,18 @@ class GameViewController: UIViewController {
     
     func gameOver(sender:NSNotification){
         let score = sender.object as! Int
-        popAlert = UIAlertController(title: "提示", message: "游戏结束\n得分:\(score)", preferredStyle: UIAlertControllerStyle.Alert)
+        var beststr = ""
+        if let bestScore = NSUserDefaults.standardUserDefaults().valueForKey("bestScore"){
+            if score > bestScore.integerValue{
+                NSUserDefaults.standardUserDefaults().setValue(score, forKey: "bestScore")
+                beststr = "\n最高纪录:\(score)"
+            }else{
+                beststr = "\n最高纪录:\(bestScore)"
+            }
+        }else{
+            NSUserDefaults.standardUserDefaults().setValue(score, forKey: "bestScore")
+        }
+        popAlert = UIAlertController(title: "提示", message: "游戏结束\n得分:\(score)"+beststr, preferredStyle: UIAlertControllerStyle.Alert)
         popAlert.addAction(UIAlertAction(title: "重新开始", style: UIAlertActionStyle.Default, handler: { (resetAction) in
             self.gameScene.startNewGame()
         }))
