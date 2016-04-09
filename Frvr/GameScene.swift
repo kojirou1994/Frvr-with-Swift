@@ -89,7 +89,7 @@ class GameScene: SKScene {
         for node in nodes {
             if node.name == "shape"{
                 handleNode = node as! SKSpriteNode
-                handleNode.runAction(SKAction.scaleTo(2, duration: 0.4))
+                handleNode.runAction(SKAction.scaleTo(1.9, duration: 0.4))
                 break
             }else if node.name == "unitShape"{
             }
@@ -320,8 +320,8 @@ class GameScene: SKScene {
         var node = SKSpriteNode()
         self.unitNodeArray = NSMutableArray()
         self.unitTexture = SKTexture(imageNamed: "gray")
-        self.unitWidth = self.unitTexture.size().width
-        self.unitHeight = self.unitTexture.size().height
+        self.unitWidth = self.unitTexture.size().width - 4
+        self.unitHeight = self.unitTexture.size().height - 2
         
         let arrayNumber: NSArray = [5,6,7,8,9,8,7,6,5]
         let startPoint = CGPointMake(CGRectGetMidX(self.frame)-2*self.unitWidth, CGRectGetHeight(self.frame)-150)
@@ -332,11 +332,11 @@ class GameScene: SKScene {
         for lineNumber in arrayNumber {
             for i in 0..<lineNumber.integerValue {
                 node = SKSpriteNode(texture: self.unitTexture)
-                
+                node.size = CGSizeMake(unitWidth - 4, unitHeight - 2)
                 if index <= 4{
-                    node.position = CGPointMake(startPoint.x - CGFloat(XDISTANCE*index) + CGFloat(i)*self.unitWidth, startPoint.y - CGFloat(YDISTANCE*index))
+                    node.position = CGPointMake(10 + startPoint.x - CGFloat(XDISTANCE*index) + CGFloat(i)*self.unitWidth, startPoint.y - CGFloat(YDISTANCE*index))
                 }else{
-                    node.position = CGPointMake(startPoint.x - CGFloat(XDISTANCE*((PLAYGROUNDLINE-1)-index)) + CGFloat(i)*self.unitWidth, startPoint.y - CGFloat(YDISTANCE*index))
+                    node.position = CGPointMake(10 + startPoint.x - CGFloat(XDISTANCE*((PLAYGROUNDLINE-1)-index)) + CGFloat(i)*self.unitWidth, startPoint.y - CGFloat(YDISTANCE*index))
                 }
                 let unitInfo = unitInfoArray.objectAtIndex(nodeCount) as! ShapeUnitInfo
                 unitInfo.unitPosition = node.position
