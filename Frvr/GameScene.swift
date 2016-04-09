@@ -64,7 +64,7 @@ class GameScene: SKScene {
         self.addChild(scoreLabel)
         
         let bestScoreLabel = SKLabelNode(fontNamed: "Heiti SC")
-        bestScoreLabel.name = "bestScoreNumberLabel"
+        bestScoreLabel.name = "bestScoreLabel"
         bestScoreLabel.text = "最高纪录:\(bestScore)"
         bestScoreLabel.fontSize = 13
         bestScoreLabel.position = CGPointMake(CGRectGetMaxX(self.frame)-60, CGRectGetHeight(self.frame)-90)
