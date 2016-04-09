@@ -38,7 +38,7 @@ class GameScene: SKScene {
         gameOverStatu = true
         NSNotificationCenter.defaultCenter().postNotificationName("GameOver", object: score)
         let bestScoreLabel = self.childNodeWithName("bestScoreLabel") as! SKLabelNode
-        bestScoreLabel.text = "最高纪录:\(bestScore)"
+        bestScoreLabel.text = "最高纪录:\(bestScore>score ? bestScore : score)"
         
     }
     

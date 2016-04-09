@@ -47,6 +47,7 @@ class RandomShapeMgr: NSObject {
         let count = posArray.count
         for index in 0..<count{
             let node = SKSpriteNode(texture: texture)
+            node.size = CGSizeMake(43, 45)
             node.setScale(0.5)
             node.position = posArray.objectAtIndex(index).CGPointValue()
             node.name = NSString(format: "%d",index) as String
