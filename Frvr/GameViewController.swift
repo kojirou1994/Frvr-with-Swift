@@ -47,11 +47,14 @@ enum ShapeType: Int {
 }
 
 class GameViewController: UIViewController {
+    
+    var gameScene:GameScene!
+    var popAlert:UIAlertController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let scene = GameScene(size: self.view.bounds.size)
+        gameScene = GameScene(size: self.view.bounds.size)
         // Configure the view.
         let skView = self.view as! SKView
         skView.showsFPS = true
@@ -61,10 +64,31 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         
         /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .AspectFill
+        gameScene.scaleMode = .AspectFill
         
-        skView.presentScene(scene)
+        skView.presentScene(gameScene)
+        
+        
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.gameOver(_:)), name: "GameOver", object: nil)
+        
+        
+        
+        
     }
+    
+    func gameOver(sender:NSNotification){
+        let score = sender.object as! Int
+        popAlert = UIAlertController(title: "提示", message: "游戏结束\n得分:\(score)", preferredStyle: UIAlertControllerStyle.Alert)
+        popAlert.addAction(UIAlertAction(title: "重新开始", style: UIAlertActionStyle.Default, handler: { (resetAction) in
+            self.gameScene.startNewGame()
+        }))
+        popAlert.addAction(UIAlertAction(title: "关闭提示", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(popAlert, animated: true, completion: nil)
+    }
+    
+
 
     override func shouldAutorotate() -> Bool {
         return true

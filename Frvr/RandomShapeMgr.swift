@@ -261,7 +261,7 @@ class RandomShapeMgr: NSObject {
         
         let pos23: NSArray = [NSValue(CGPoint: CGPointMake(width/2, -19)),
                              NSValue(CGPoint: CGPointMake(-width/2, -19)),
-                             NSValue(CGPoint: CGPointMake(width, 0)),
+                             NSValue(CGPoint: CGPointMake(-width, 0)),
                              NSValue(CGPoint: CGPointMake(-width/2, 19))]
         let compareSeq23: NSArray = [5,0,1]
         posResultsArray.addObject(pos23)

@@ -25,20 +25,21 @@ class GameScene: SKScene {
     var unitWidth: CGFloat!
     var unitHeight: CGFloat!
     var score: Int = 0
+    var gameOverStatu: Bool = false
     
     func startNewGame(){
-        self.paused = false
+//        self.paused = false
+        gameOverStatu = false
         self.refreshPlayground()
         self.shapeFill()
     }
     
     func gameOver(){
-        let view = self.view
-        self.paused = true
-        let toast = view!.viewWithTag(1001)
-        let scoreLabel = toast?.viewWithTag(2001) as! UILabel
-        scoreLabel.text = "得分:\(score)"
-        toast?.hidden = false
+        gameOverStatu = true
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("GameOver", object: score)
+//        self.paused = true
+        
     }
     
     override func didMoveToView(view: SKView) {
@@ -118,7 +119,7 @@ class GameScene: SKScene {
                     }
                 }
             }
-            score += ocuppiedCount * 10
+            score = gameOverStatu ? score + ocuppiedCount * 10 : score
             self.changeScore()
             if index == ocuppiedCount{
                 for unitNode in tempArray{
